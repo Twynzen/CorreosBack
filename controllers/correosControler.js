@@ -11,11 +11,25 @@ const envioCorreo = (req = request, resp = response ) =>{
             pass:'12345'
         }
     });
+
+    const opciones = {
+        from: 'Programacion',
+        subject: body.asunto,
+        to: body.email,
+        text:body.mensaje
+    };
+
+    config.sendMail(opciones,function(error, result){
+
+        if (error) return resp.json({ok: false, msg:error}); 
+
+        return resp.json({
+            ok: true,
+            msg:result
+        });
+    })
 }
 
-const opciones = {
-    from: 'Programacion',
-    subject: body.asunto,
-    to: body.email,
-    text:body.mensaje
+module.exports= {
+    envioCorreo
 }
